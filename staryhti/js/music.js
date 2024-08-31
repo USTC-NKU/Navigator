@@ -1,9 +1,11 @@
 var server = "tencent"; //netease: 网易云音乐; tencent: QQ音乐; kugou: 酷狗音乐; xiami: 虾米; kuwo: 酷我
 var type = "playlist"; //song: 单曲; playlist: 歌单; album: 唱片
 var id = "3442174120"; //封面 ID / 单曲 ID / 歌单 ID
+var playstatus = 1;
 
 $.ajax({
-    url: "https://api.wuenci.com/meting/api/?server=" + server + "&type=" + type + "&id=" + id,
+    // url: "https://api.wuenci.com/meting/api/?server=" + server + "&type=" + type + "&id=" + id,
+    url: "https://api.injahow.cn/meting/?server="+ server + "&type=" + type + "&id=" + id,
     type: "GET",
     dataType: "JSON",
     success: function (data) {
@@ -82,8 +84,28 @@ $.ajax({
 
         /* 上下曲 */
         $('#play').on('click', function () {
-            ap.toggle();
-            $("#music-name").html($(".aplayer-title").text() + $(".aplayer-author").text());
+            if($('#play>i').hasClass("fa-play")&&playstatus){
+                ap.play();
+                // $("#play").html("<i class='fa-solid fa-pause'>");
+                playstatus=0;
+                // $("#music-name").html($(".aplayer-title").text() + $(".aplayer-author").text());
+                // if ($(document).width() >= 990) {
+                //     $('.power').css("cssText", "display:none");
+                //     $('#lrc').css("cssText", "display:block !important");
+                // };
+            }
+            else if(!playstatus&&$('#play>i').hasClass("fa-pause")){
+                ap.pause();
+                // $("#play").html("<i class='fa-solid fa-play'>");
+                playstatus=1;
+                // $("#music-name").html($(".aplayer-title").text() + $(".aplayer-author").text());
+                // if ($(document).width() >= 990) {
+                //     $('#lrc').css("cssText", "display:none !important");
+                //     $('.power').css("cssText", "display:block");
+                // }
+            }
+            // ap.toggle();
+            // $("#music-name").html($(".aplayer-title").text() + $(".aplayer-author").text());
         });
 
         $('#last').on('click', function () {
